@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-set(USDPLUGIN_NAME usdSbs)
+set(USDPLUGIN_NAME myNewSchema)
 
 project(${USDPLUGIN_NAME})
 
