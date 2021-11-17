@@ -10,7 +10,6 @@ myNewSchema/
   src/
     CMakeLists.txt
     __init__.py
-    plugInfo.json
     plugInfo.root.json
     module.cpp
     moduleDeps.cpp
