@@ -1,0 +1,74 @@
+#usda 1.0
+(
+    """ This file contains an example schemata for code generation using
+        usdGenSchema.
+    """
+    subLayers = [
+        @usd/schema.usda@
+    ]
+)
+
+over "GLOBAL" (
+    customData = {
+        string libraryName       = "schemaFoo"
+        string libraryPath       = "."
+        string libraryPrefix     = "schemaFoo"
+    }
+)
+{
+}
+
+class "BasePrim" (
+    doc = """An example of an untyped schema prim. Note that it does not
+    specify a typeName"""
+    inherits = </Typed>
+    customData = {
+        # Provide a different class name for the C++ and python schema classes.
+        # This will be prefixed with libraryPrefix.
+        # In this case, the class name becomes UsdSchemaExamplesSimple.
+        string className = "BasePrim"
+        }
+    )
+{
+    int intAttr = 0 (
+        doc = "An integer attribute with fallback value of 0."
+    )
+    rel target (
+        doc = """A relationship called target that could point to another prim
+        or a property"""
+    )
+}
+
+
+class SpePrim "SpePrim" (
+    doc = """An example of an typed schema prim"""
+    # IsA schemas should derive from </Typed>, which is defined in the sublayer
+    # usd/schema.usda.
+    inherits = </BasePrim>
+    apiSchemas = ["BarAPI"]
+    customData = {
+        string className = "SpePrim"
+    }
+)
+{
+}
+
+
+class "BarAPI" (
+    doc = "A bar API to modify SpePrim"
+    # IsA schemas should derive from </APISchemaBase>, which is defined in the sublayer
+    # usd/schema.usda.
+    inherits = </APISchemaBase>
+    customData = {
+        token apiSchemaType = "singleApply"
+        token[] apiSchemaCanOnlyApplyTo = ["SpePrim"]
+    }
+)
+{
+    double bar:size (
+        customData = {
+            string apiName = "size"
+        }
+        doc = "A Bar size"
+    )
+}
